@@ -1,0 +1,1 @@
+// Frontend tests package for Wingstop Inventory App 

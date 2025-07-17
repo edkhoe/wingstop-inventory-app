@@ -1,0 +1,1215 @@
+2025-07-09 17:14:08 - app.core.logging - INFO - Logging system initialized
+2025-07-09 17:14:38 - app.core.logging - INFO - Logging system initialized
+2025-07-09 17:14:52 - app.core.logging - INFO - Logging system initialized
+2025-07-09 17:15:37 - app.core.logging - INFO - Logging system initialized
+2025-07-09 17:20:20 - app.core.logging - INFO - Logging system initialized
+2025-07-09 17:23:22 - app.core.logging - INFO - Logging system initialized
+2025-07-09 17:23:32 - app.core.logging - INFO - Logging system initialized
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("user")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("role")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("role")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("location")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("location")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("category")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("category")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("inventoryitem")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("inventoryitem")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("count")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("count")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("transfer")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("transfer")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("schedule")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("schedule")
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE role (
+	id INTEGER NOT NULL, 
+	name VARCHAR NOT NULL, 
+	description VARCHAR, 
+	created_at DATETIME NOT NULL, 
+	updated_at DATETIME NOT NULL, 
+	PRIMARY KEY (id)
+)
+
+
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [no key 0.00044s] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - CREATE UNIQUE INDEX ix_role_name ON role (name)
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [no key 0.00151s] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE location (
+	id INTEGER NOT NULL, 
+	name VARCHAR NOT NULL, 
+	address VARCHAR NOT NULL, 
+	city VARCHAR NOT NULL, 
+	state VARCHAR NOT NULL, 
+	zip_code VARCHAR NOT NULL, 
+	phone VARCHAR, 
+	created_at DATETIME NOT NULL, 
+	updated_at DATETIME NOT NULL, 
+	PRIMARY KEY (id)
+)
+
+
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [no key 0.00189s] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - CREATE UNIQUE INDEX ix_location_name ON location (name)
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [no key 0.00128s] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE category (
+	id INTEGER NOT NULL, 
+	name VARCHAR NOT NULL, 
+	description VARCHAR, 
+	created_at DATETIME NOT NULL, 
+	updated_at DATETIME NOT NULL, 
+	PRIMARY KEY (id)
+)
+
+
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [no key 0.00108s] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - CREATE UNIQUE INDEX ix_category_name ON category (name)
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [no key 0.00065s] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE user (
+	id INTEGER NOT NULL, 
+	username VARCHAR NOT NULL, 
+	email VARCHAR NOT NULL, 
+	hashed_password VARCHAR NOT NULL, 
+	is_active BOOLEAN NOT NULL, 
+	role_id INTEGER, 
+	created_at DATETIME NOT NULL, 
+	updated_at DATETIME NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(role_id) REFERENCES role (id)
+)
+
+
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [no key 0.00108s] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - CREATE UNIQUE INDEX ix_user_username ON user (username)
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [no key 0.00094s] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - CREATE UNIQUE INDEX ix_user_email ON user (email)
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [no key 0.00062s] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE inventoryitem (
+	id INTEGER NOT NULL, 
+	name VARCHAR NOT NULL, 
+	category_id INTEGER, 
+	unit VARCHAR NOT NULL, 
+	par_level FLOAT, 
+	reorder_increment FLOAT, 
+	vendor VARCHAR, 
+	sku VARCHAR, 
+	created_at DATETIME NOT NULL, 
+	updated_at DATETIME NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(category_id) REFERENCES category (id)
+)
+
+
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [no key 0.00101s] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_inventoryitem_name ON inventoryitem (name)
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [no key 0.00180s] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE count (
+	id INTEGER NOT NULL, 
+	item_id INTEGER NOT NULL, 
+	location_id INTEGER NOT NULL, 
+	user_id INTEGER NOT NULL, 
+	quantity FLOAT NOT NULL, 
+	counted_at DATETIME NOT NULL, 
+	approved BOOLEAN NOT NULL, 
+	approved_by INTEGER, 
+	approved_at DATETIME, 
+	created_at DATETIME NOT NULL, 
+	updated_at DATETIME NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(item_id) REFERENCES inventoryitem (id), 
+	FOREIGN KEY(location_id) REFERENCES location (id), 
+	FOREIGN KEY(user_id) REFERENCES user (id), 
+	FOREIGN KEY(approved_by) REFERENCES user (id)
+)
+
+
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [no key 0.00103s] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE transfer (
+	id INTEGER NOT NULL, 
+	item_id INTEGER NOT NULL, 
+	from_location_id INTEGER NOT NULL, 
+	to_location_id INTEGER NOT NULL, 
+	quantity FLOAT NOT NULL, 
+	transferred_by INTEGER NOT NULL, 
+	transferred_at DATETIME NOT NULL, 
+	created_at DATETIME NOT NULL, 
+	updated_at DATETIME NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(item_id) REFERENCES inventoryitem (id), 
+	FOREIGN KEY(from_location_id) REFERENCES location (id), 
+	FOREIGN KEY(to_location_id) REFERENCES location (id), 
+	FOREIGN KEY(transferred_by) REFERENCES user (id)
+)
+
+
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [no key 0.00098s] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE schedule (
+	id INTEGER NOT NULL, 
+	location_id INTEGER NOT NULL, 
+	event_type VARCHAR NOT NULL, 
+	scheduled_for DATETIME NOT NULL, 
+	created_by INTEGER NOT NULL, 
+	created_at DATETIME NOT NULL, 
+	updated_at DATETIME NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(location_id) REFERENCES location (id), 
+	FOREIGN KEY(created_by) REFERENCES user (id)
+)
+
+
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - [no key 0.00085s] ()
+2025-07-09 17:23:32 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-07-09 17:23:32 - app.core.database - INFO - Database tables created successfully
+2025-07-09 17:23:32 - app.core.database - ERROR - Database connection failed: Not an executable object: 'SELECT 1'
+2025-07-09 17:23:32 - app.core.database - ERROR - Database initialization failed: Database connection failed
+2025-07-09 17:23:32 - __main__ - ERROR - Database initialization failed: Database connection failed
+2025-07-09 17:23:32 - __main__ - INFO - Starting server on 0.0.0.0:8000
+2025-07-09 17:24:30 - app.core.middleware - INFO - Request started
+2025-07-09 17:24:30 - app.core.middleware - INFO - Request completed
+2025-07-09 17:24:42 - app.core.middleware - INFO - Request started
+2025-07-09 17:24:42 - app.core.middleware - INFO - Request completed
+2025-07-09 17:24:42 - app.core.middleware - INFO - Request started
+2025-07-09 17:24:42 - app.core.middleware - INFO - Request completed
+2025-07-09 17:54:21 - app.core.logging - INFO - Logging system initialized
+2025-07-09 17:57:14 - app.core.logging - INFO - Logging system initialized
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("role")
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("location")
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("category")
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("inventoryitem")
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("count")
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("transfer")
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("schedule")
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 17:57:14 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-07-09 17:57:14 - app.core.database - INFO - Database tables created successfully
+2025-07-09 17:57:14 - app.core.database - ERROR - Database connection failed: Not an executable object: 'SELECT 1'
+2025-07-09 17:57:14 - app.core.database - ERROR - Database initialization failed: Database connection failed
+2025-07-09 17:57:14 - __main__ - ERROR - Database initialization failed: Database connection failed
+2025-07-09 17:57:14 - __main__ - INFO - Starting server on 0.0.0.0:8000
+2025-07-09 17:57:33 - app.core.middleware - INFO - Request started
+2025-07-09 17:57:33 - app.core.middleware - INFO - Request completed
+2025-07-09 17:57:43 - app.core.middleware - INFO - Request started
+2025-07-09 17:57:43 - app.core.middleware - INFO - Request completed
+2025-07-09 17:58:07 - app.core.middleware - INFO - Request started
+2025-07-09 17:58:07 - app.core.middleware - INFO - Request completed
+2025-07-09 17:58:14 - app.core.middleware - INFO - Request started
+2025-07-09 17:58:14 - app.core.middleware - INFO - Request completed
+2025-07-09 18:15:20 - app.core.middleware - INFO - Request started
+2025-07-09 18:15:20 - app.core.database - ERROR - Database connection failed: Not an executable object: 'SELECT 1'
+2025-07-09 18:15:20 - app.core.middleware - INFO - Request completed
+2025-07-09 21:12:30 - app.core.logging - INFO - Logging system initialized
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("role")
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("location")
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("category")
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("inventoryitem")
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("count")
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("transfer")
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("schedule")
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-09 21:12:31 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-07-09 21:12:31 - app.core.database - INFO - Database tables created successfully
+2025-07-09 21:12:31 - app.core.database - ERROR - Database connection failed: Not an executable object: 'SELECT 1'
+2025-07-09 21:12:31 - app.core.database - ERROR - Database initialization failed: Database connection failed
+2025-07-09 21:12:31 - __main__ - ERROR - Database initialization failed: Database connection failed
+2025-07-09 21:12:31 - __main__ - INFO - Starting server on 0.0.0.0:8000
+2025-07-11 16:55:55 - app.core.logging - INFO - Logging system initialized
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("role")
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("location")
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("category")
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("inventoryitem")
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("count")
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("transfer")
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("schedule")
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-07-11 16:55:56 - app.core.database - INFO - Database tables created successfully
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - SELECT 1
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - [generated in 0.00068s] ()
+2025-07-11 16:55:56 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-07-11 16:55:56 - app.core.database - INFO - Database initialized successfully
+2025-07-11 16:55:56 - __main__ - INFO - Database initialized successfully
+2025-07-11 16:55:56 - __main__ - INFO - Starting server on 0.0.0.0:8000
+2025-07-11 16:56:23 - app.core.middleware - INFO - Request started
+2025-07-11 16:56:23 - app.core.middleware - INFO - Request completed
+2025-07-11 16:56:23 - app.core.middleware - INFO - Request started
+2025-07-11 16:56:23 - app.core.middleware - INFO - Request completed
+2025-07-11 16:56:27 - app.core.middleware - INFO - Request started
+2025-07-11 16:56:27 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:14 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:15 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:18 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:18 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:18 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:18 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:25 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:25 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:29 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:29 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:29 - app.core.security - WARNING - Invalid content type: 
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:37 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request completed
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request started
+2025-07-11 16:57:38 - app.core.middleware - INFO - Request completed
+2025-07-14 16:37:43 - app.core.logging - INFO - Logging system initialized
+2025-07-14 16:38:17 - app.core.logging - INFO - Logging system initialized
+2025-07-14 16:40:56 - app.core.logging - INFO - Logging system initialized
+2025-07-14 16:40:56 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 16:40:57 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 16:40:58 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 16:40:59 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 16:41:02 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 16:41:04 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 16:41:04 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 16:41:09 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 16:41:10 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/inventory-items/ "HTTP/1.1 404 Not Found"
+2025-07-14 16:41:10 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 16:41:10 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:07:50 - app.core.logging - INFO - Logging system initialized
+2025-07-14 17:07:51 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 17:07:51 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:07:51 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:52 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:07:53 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:07:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:07:55 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 17:07:56 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:07:58 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:07:59 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:08:04 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:08:04 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/inventory-items/ "HTTP/1.1 404 Not Found"
+2025-07-14 17:08:05 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:08:05 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:08:42 - app.core.logging - INFO - Logging system initialized
+2025-07-14 17:08:43 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 17:08:43 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:08:43 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:44 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:08:45 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:08:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:47 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:47 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:08:47 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 17:08:48 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:08:50 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:08:51 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:08:56 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:08:56 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/inventory-items/ "HTTP/1.1 404 Not Found"
+2025-07-14 17:08:57 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:08:57 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:09:58 - app.core.logging - INFO - Logging system initialized
+2025-07-14 17:09:59 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 17:10:08 - app.core.logging - INFO - Logging system initialized
+2025-07-14 17:10:09 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 17:10:09 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:10:09 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:11 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:10:11 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:10:11 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:10:13 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 17:10:15 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:10:18 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:10:19 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:10:26 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:10:26 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/inventory-items/ "HTTP/1.1 404 Not Found"
+2025-07-14 17:10:27 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:10:28 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:14:12 - app.core.logging - INFO - Logging system initialized
+2025-07-14 17:14:13 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 17:14:14 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:14:14 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:16 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:14:17 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:14:17 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:18 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:18 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:18 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:18 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:18 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:18 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:18 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:18 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:19 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:19 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:19 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:19 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:19 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:19 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:19 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:14:19 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 17:14:21 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:14:25 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:14:26 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:14:34 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:14:35 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/inventory-items/ "HTTP/1.1 404 Not Found"
+2025-07-14 17:14:36 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:14:37 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:23:46 - app.core.logging - INFO - Logging system initialized
+2025-07-14 17:23:47 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 17:23:47 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:23:47 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:48 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:23:48 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:23:48 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:23:49 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 17:23:50 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/ "HTTP/1.1 200 OK"
+2025-07-14 17:23:50 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/9 "HTTP/1.1 200 OK"
+2025-07-14 17:23:50 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:23:51 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/13 "HTTP/1.1 200 OK"
+2025-07-14 17:23:51 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:23:52 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/14 "HTTP/1.1 204 No Content"
+2025-07-14 17:23:52 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/14 "HTTP/1.1 404 Not Found"
+2025-07-14 17:23:52 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:23:52 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/14 "HTTP/1.1 200 OK"
+2025-07-14 17:23:53 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?date=2025-07-14 "HTTP/1.1 200 OK"
+2025-07-14 17:23:54 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/inventory-items/ "HTTP/1.1 404 Not Found"
+2025-07-14 17:23:55 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:23:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/inventory-items/ "HTTP/1.1 404 Not Found"
+2025-07-14 17:23:55 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:23:56 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:32:25 - app.core.logging - INFO - Logging system initialized
+2025-07-14 17:34:00 - app.core.logging - INFO - Logging system initialized
+2025-07-14 17:34:49 - app.core.logging - INFO - Logging system initialized
+2025-07-14 17:34:50 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:34:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:34:50 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:34:50 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:34:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:34:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:34:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:34:50 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:34:50 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:34:50 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:34:51 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:34:51 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/inventory-items/ "HTTP/1.1 404 Not Found"
+2025-07-14 17:34:51 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:34:51 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:35:19 - app.core.logging - INFO - Logging system initialized
+2025-07-14 17:35:19 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:35:19 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:35:19 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:35:19 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:35:19 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:35:19 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:35:20 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:35:20 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:35:20 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:35:20 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:35:20 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:35:20 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/inventory-items/ "HTTP/1.1 404 Not Found"
+2025-07-14 17:35:20 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:35:20 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:36:41 - app.core.logging - INFO - Logging system initialized
+2025-07-14 17:36:51 - app.core.logging - INFO - Logging system initialized
+2025-07-14 17:38:09 - app.core.logging - INFO - Logging system initialized
+2025-07-14 17:38:10 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 17:38:10 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/5 "HTTP/1.1 200 OK"
+2025-07-14 17:38:10 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:10 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:38:12 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/14 "HTTP/1.1 200 OK"
+2025-07-14 17:38:12 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:12 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/18 "HTTP/1.1 204 No Content"
+2025-07-14 17:38:12 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/18 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:12 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:12 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:38:12 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/22 "HTTP/1.1 200 OK"
+2025-07-14 17:38:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:38:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:38:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 17:38:13 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 17:38:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:38:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:38:13 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/ "HTTP/1.1 200 OK"
+2025-07-14 17:38:13 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/9 "HTTP/1.1 200 OK"
+2025-07-14 17:38:13 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:14 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:38:14 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:38:14 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:38:14 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/13 "HTTP/1.1 200 OK"
+2025-07-14 17:38:14 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:15 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/14 "HTTP/1.1 204 No Content"
+2025-07-14 17:38:15 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/14 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:15 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:15 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/14 "HTTP/1.1 200 OK"
+2025-07-14 17:38:15 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:38:16 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?date=2025-07-14 "HTTP/1.1 200 OK"
+2025-07-14 17:38:16 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?user_id=18 "HTTP/1.1 200 OK"
+2025-07-14 17:38:16 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?inventory_item_id=55 "HTTP/1.1 200 OK"
+2025-07-14 17:38:16 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:38:17 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:38:17 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 17:38:17 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/inventory-items/ "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:18 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/inventory-items/70 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:18 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:18 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/inventory-items/ "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:18 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/inventory-items/ "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:18 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/inventory-items/76 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:18 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:19 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/inventory-items/79 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:19 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/inventory-items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:19 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/inventory-items/82 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:19 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/inventory-items/ "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:19 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/inventory-items/ "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:20 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/inventory-items/?category_id=125 "HTTP/1.1 404 Not Found"
+2025-07-14 17:38:20 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/inventory-items/ "HTTP/1.1 404 Not Found"
+2025-07-14 18:17:14 - app.core.logging - INFO - Logging system initialized
+2025-07-14 18:17:15 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:39 - app.core.logging - INFO - Logging system initialized
+2025-07-14 18:17:40 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 18:17:40 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/5 "HTTP/1.1 200 OK"
+2025-07-14 18:17:40 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:17:40 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:42 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/14 "HTTP/1.1 200 OK"
+2025-07-14 18:17:42 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:17:42 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/18 "HTTP/1.1 204 No Content"
+2025-07-14 18:17:42 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/18 "HTTP/1.1 404 Not Found"
+2025-07-14 18:17:42 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:17:42 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:17:42 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:17:42 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:42 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:42 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:17:42 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/ "HTTP/1.1 200 OK"
+2025-07-14 18:17:43 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/7 "HTTP/1.1 200 OK"
+2025-07-14 18:17:43 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:43 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:17:43 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/10 "HTTP/1.1 200 OK"
+2025-07-14 18:17:43 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:17:44 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/11 "HTTP/1.1 204 No Content"
+2025-07-14 18:17:44 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/11 "HTTP/1.1 404 Not Found"
+2025-07-14 18:17:44 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:17:44 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/11 "HTTP/1.1 200 OK"
+2025-07-14 18:17:44 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?date=2025-07-14 "HTTP/1.1 200 OK"
+2025-07-14 18:17:45 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?user_id=13 "HTTP/1.1 200 OK"
+2025-07-14 18:17:45 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?item_id=40 "HTTP/1.1 200 OK"
+2025-07-14 18:17:45 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:45 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:45 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:45 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:45 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:45 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:45 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:45 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:45 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:45 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:45 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?skip=0&limit=5 "HTTP/1.1 200 OK"
+2025-07-14 18:17:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:17:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:17:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:17:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:17:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:17:46 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:17:46 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/ "HTTP/1.1 200 OK"
+2025-07-14 18:17:46 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/55 "HTTP/1.1 200 OK"
+2025-07-14 18:17:46 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:17:47 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:47 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:47 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/items/63 "HTTP/1.1 200 OK"
+2025-07-14 18:17:47 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:17:47 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/items/66 "HTTP/1.1 204 No Content"
+2025-07-14 18:17:47 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/66 "HTTP/1.1 404 Not Found"
+2025-07-14 18:17:47 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:17:48 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/69 "HTTP/1.1 200 OK"
+2025-07-14 18:17:48 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:17:48 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:48 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:48 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/?search=Chicken "HTTP/1.1 200 OK"
+2025-07-14 18:17:48 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/?category_id=104 "HTTP/1.1 200 OK"
+2025-07-14 18:17:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:17:49 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/?skip=0&limit=5 "HTTP/1.1 200 OK"
+2025-07-14 18:17:58 - app.core.logging - INFO - Logging system initialized
+2025-07-14 18:17:58 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:18:21 - app.core.logging - INFO - Logging system initialized
+2025-07-14 18:18:36 - app.core.logging - INFO - Logging system initialized
+2025-07-14 18:18:36 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 18:19:07 - app.core.logging - INFO - Logging system initialized
+2025-07-14 18:19:08 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 18:19:08 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/5 "HTTP/1.1 200 OK"
+2025-07-14 18:19:08 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:19:08 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:09 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/14 "HTTP/1.1 200 OK"
+2025-07-14 18:19:09 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:19:10 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/18 "HTTP/1.1 204 No Content"
+2025-07-14 18:19:10 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/18 "HTTP/1.1 404 Not Found"
+2025-07-14 18:19:10 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:19:10 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:19:10 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:19:10 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:10 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:10 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:19:10 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/ "HTTP/1.1 200 OK"
+2025-07-14 18:19:10 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/7 "HTTP/1.1 200 OK"
+2025-07-14 18:19:11 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:11 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:19:11 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/10 "HTTP/1.1 200 OK"
+2025-07-14 18:19:11 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:19:11 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/11 "HTTP/1.1 204 No Content"
+2025-07-14 18:19:11 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/11 "HTTP/1.1 404 Not Found"
+2025-07-14 18:19:11 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:19:12 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/11 "HTTP/1.1 200 OK"
+2025-07-14 18:19:12 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?date=2025-07-14 "HTTP/1.1 200 OK"
+2025-07-14 18:19:12 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?user_id=13 "HTTP/1.1 200 OK"
+2025-07-14 18:19:12 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?item_id=40 "HTTP/1.1 200 OK"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?skip=0&limit=5 "HTTP/1.1 200 OK"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:19:13 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:19:14 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:14 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:14 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:19:14 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:19:14 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:19:14 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/ "HTTP/1.1 200 OK"
+2025-07-14 18:19:14 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/55 "HTTP/1.1 200 OK"
+2025-07-14 18:19:14 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:19:15 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:15 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:15 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/items/63 "HTTP/1.1 200 OK"
+2025-07-14 18:19:15 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:19:15 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/items/66 "HTTP/1.1 204 No Content"
+2025-07-14 18:19:15 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/66 "HTTP/1.1 404 Not Found"
+2025-07-14 18:19:15 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:19:16 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/69 "HTTP/1.1 200 OK"
+2025-07-14 18:19:16 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:19:16 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:16 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:16 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/?search=Chicken "HTTP/1.1 200 OK"
+2025-07-14 18:19:17 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/?category_id=104 "HTTP/1.1 200 OK"
+2025-07-14 18:19:17 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:17 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:17 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:17 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:17 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:17 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:17 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:17 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:17 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:17 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:19:17 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/?skip=0&limit=5 "HTTP/1.1 200 OK"
+2025-07-14 18:25:31 - app.core.logging - INFO - Logging system initialized
+2025-07-14 18:25:32 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 18:25:32 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/5 "HTTP/1.1 200 OK"
+2025-07-14 18:25:32 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:25:32 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:33 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 409 Conflict"
+2025-07-14 18:25:33 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/14 "HTTP/1.1 200 OK"
+2025-07-14 18:25:33 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:25:33 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/18 "HTTP/1.1 204 No Content"
+2025-07-14 18:25:33 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/18 "HTTP/1.1 404 Not Found"
+2025-07-14 18:25:33 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:25:33 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:25:33 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:25:33 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:33 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:33 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:25:34 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/ "HTTP/1.1 200 OK"
+2025-07-14 18:25:34 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/7 "HTTP/1.1 200 OK"
+2025-07-14 18:25:34 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:35 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:25:35 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/10 "HTTP/1.1 200 OK"
+2025-07-14 18:25:35 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:25:35 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/11 "HTTP/1.1 204 No Content"
+2025-07-14 18:25:35 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/11 "HTTP/1.1 404 Not Found"
+2025-07-14 18:25:35 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:25:35 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/11 "HTTP/1.1 200 OK"
+2025-07-14 18:25:36 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?count_date=2025-07-14 "HTTP/1.1 200 OK"
+2025-07-14 18:25:36 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?user_id=13 "HTTP/1.1 200 OK"
+2025-07-14 18:25:36 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?item_id=40 "HTTP/1.1 200 OK"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?skip=0&limit=5 "HTTP/1.1 200 OK"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:25:37 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:25:38 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/ "HTTP/1.1 200 OK"
+2025-07-14 18:25:38 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/55 "HTTP/1.1 200 OK"
+2025-07-14 18:25:38 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:25:38 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:38 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:25:39 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/items/62 "HTTP/1.1 200 OK"
+2025-07-14 18:25:39 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:25:39 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/items/65 "HTTP/1.1 204 No Content"
+2025-07-14 18:25:39 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/65 "HTTP/1.1 404 Not Found"
+2025-07-14 18:25:39 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:25:39 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/68 "HTTP/1.1 200 OK"
+2025-07-14 18:25:39 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:25:40 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:40 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:40 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/?search=Chicken "HTTP/1.1 200 OK"
+2025-07-14 18:25:40 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/?category_id=104 "HTTP/1.1 200 OK"
+2025-07-14 18:25:40 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:40 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:40 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:40 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:40 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:40 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:40 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:40 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:40 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:40 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:25:41 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/?skip=0&limit=5 "HTTP/1.1 200 OK"
+2025-07-14 18:25:50 - app.core.logging - INFO - Logging system initialized
+2025-07-14 18:25:56 - app.core.logging - INFO - Logging system initialized
+2025-07-14 18:25:57 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 18:26:49 - app.core.logging - INFO - Logging system initialized
+2025-07-14 18:26:50 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 18:26:50 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/5 "HTTP/1.1 200 OK"
+2025-07-14 18:26:50 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:26:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 409 Conflict"
+2025-07-14 18:26:51 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/14 "HTTP/1.1 200 OK"
+2025-07-14 18:26:51 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:26:51 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/18 "HTTP/1.1 204 No Content"
+2025-07-14 18:26:51 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/18 "HTTP/1.1 404 Not Found"
+2025-07-14 18:26:51 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:26:51 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:26:51 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:26:51 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:51 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:51 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:26:51 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/ "HTTP/1.1 200 OK"
+2025-07-14 18:26:52 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/7 "HTTP/1.1 200 OK"
+2025-07-14 18:26:52 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:52 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:26:52 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/10 "HTTP/1.1 200 OK"
+2025-07-14 18:26:52 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:26:53 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/11 "HTTP/1.1 204 No Content"
+2025-07-14 18:26:53 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/11 "HTTP/1.1 404 Not Found"
+2025-07-14 18:26:53 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:26:53 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/11 "HTTP/1.1 200 OK"
+2025-07-14 18:26:53 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?count_date=2025-07-14 "HTTP/1.1 200 OK"
+2025-07-14 18:26:53 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?user_id=13 "HTTP/1.1 200 OK"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?item_id=40 "HTTP/1.1 200 OK"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?skip=0&limit=5 "HTTP/1.1 200 OK"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:26:54 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:26:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:26:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:26:55 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:26:55 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/ "HTTP/1.1 200 OK"
+2025-07-14 18:26:55 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/55 "HTTP/1.1 200 OK"
+2025-07-14 18:26:55 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:26:56 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:56 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:26:56 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/items/62 "HTTP/1.1 200 OK"
+2025-07-14 18:26:56 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:26:56 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/items/65 "HTTP/1.1 204 No Content"
+2025-07-14 18:26:56 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/65 "HTTP/1.1 404 Not Found"
+2025-07-14 18:26:56 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:26:57 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/68 "HTTP/1.1 200 OK"
+2025-07-14 18:26:57 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:26:57 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:57 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:57 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/?search=Chicken "HTTP/1.1 200 OK"
+2025-07-14 18:26:58 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/?category_id=104 "HTTP/1.1 200 OK"
+2025-07-14 18:26:58 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:58 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:58 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:58 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:58 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:58 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:58 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:58 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:58 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:58 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:26:58 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/?skip=0&limit=5 "HTTP/1.1 200 OK"
+2025-07-14 18:27:26 - app.core.logging - INFO - Logging system initialized
+2025-07-14 18:27:27 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:27:58 - app.core.logging - INFO - Logging system initialized
+2025-07-14 18:27:59 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:31:48 - app.core.logging - INFO - Logging system initialized
+2025-07-14 18:31:49 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 18:31:49 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/5 "HTTP/1.1 200 OK"
+2025-07-14 18:31:49 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:31:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:49 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 409 Conflict"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/14 "HTTP/1.1 200 OK"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/18 "HTTP/1.1 204 No Content"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/18 "HTTP/1.1 404 Not Found"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/?skip=0&limit=5 "HTTP/1.1 200 OK"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:31:50 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:32:59 - app.core.logging - INFO - Logging system initialized
+2025-07-14 18:33:00 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/ "HTTP/1.1 200 OK"
+2025-07-14 18:33:00 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/5 "HTTP/1.1 200 OK"
+2025-07-14 18:33:00 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:33:00 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 409 Conflict"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/14 "HTTP/1.1 200 OK"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/18 "HTTP/1.1 204 No Content"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/18 "HTTP/1.1 404 Not Found"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/categories/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/categories/?skip=0&limit=5 "HTTP/1.1 200 OK"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:01 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/categories/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:02 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/ "HTTP/1.1 200 OK"
+2025-07-14 18:33:02 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/7 "HTTP/1.1 200 OK"
+2025-07-14 18:33:02 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:02 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:03 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/10 "HTTP/1.1 200 OK"
+2025-07-14 18:33:03 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:33:03 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/11 "HTTP/1.1 204 No Content"
+2025-07-14 18:33:03 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/11 "HTTP/1.1 404 Not Found"
+2025-07-14 18:33:03 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/counts/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:33:03 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/11 "HTTP/1.1 200 OK"
+2025-07-14 18:33:04 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?count_date=2025-07-14 "HTTP/1.1 200 OK"
+2025-07-14 18:33:04 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?user_id=13 "HTTP/1.1 200 OK"
+2025-07-14 18:33:04 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?item_id=40 "HTTP/1.1 200 OK"
+2025-07-14 18:33:04 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:04 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:04 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:04 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:04 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:04 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:04 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:04 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:04 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:04 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:04 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/counts/?skip=0&limit=5 "HTTP/1.1 200 OK"
+2025-07-14 18:33:05 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:05 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:05 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:05 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:05 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:05 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:05 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:05 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:05 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:05 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/counts/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:05 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/ "HTTP/1.1 200 OK"
+2025-07-14 18:33:06 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/55 "HTTP/1.1 200 OK"
+2025-07-14 18:33:06 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:33:06 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:06 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:06 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/items/62 "HTTP/1.1 200 OK"
+2025-07-14 18:33:06 - httpx - INFO - HTTP Request: PUT http://testserver/api/v1/items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:33:07 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/items/65 "HTTP/1.1 204 No Content"
+2025-07-14 18:33:07 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/65 "HTTP/1.1 404 Not Found"
+2025-07-14 18:33:07 - httpx - INFO - HTTP Request: DELETE http://testserver/api/v1/items/99999 "HTTP/1.1 404 Not Found"
+2025-07-14 18:33:07 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/68 "HTTP/1.1 200 OK"
+2025-07-14 18:33:07 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 422 Unprocessable Entity"
+2025-07-14 18:33:07 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:07 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:07 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/?search=Chicken "HTTP/1.1 200 OK"
+2025-07-14 18:33:08 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/?category_id=125 "HTTP/1.1 200 OK"
+2025-07-14 18:33:08 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:08 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:08 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:08 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:08 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:08 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:08 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:08 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:08 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:08 - httpx - INFO - HTTP Request: POST http://testserver/api/v1/items/ "HTTP/1.1 201 Created"
+2025-07-14 18:33:08 - httpx - INFO - HTTP Request: GET http://testserver/api/v1/items/?skip=0&limit=5 "HTTP/1.1 200 OK"
+2025-07-15 15:59:21 - app.core.logging - INFO - Logging system initialized
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("role")
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("location")
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("category")
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("inventoryitem")
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("count")
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("transfer")
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("schedule")
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-07-15 15:59:22 - app.core.database - INFO - Database tables created successfully
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - SELECT 1
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - [generated in 0.00065s] ()
+2025-07-15 15:59:22 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-07-15 15:59:22 - app.core.database - INFO - Database initialized successfully
+2025-07-15 15:59:22 - __main__ - INFO - Database initialized successfully
+2025-07-15 15:59:22 - __main__ - INFO - Starting server on 0.0.0.0:8000
+2025-07-15 17:22:37 - app.core.logging - INFO - Logging system initialized
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("user")
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("role")
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("location")
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("category")
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("inventoryitem")
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("count")
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("transfer")
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("schedule")
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-07-15 17:22:37 - app.core.database - INFO - Database tables created successfully
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - SELECT 1
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - [generated in 0.00084s] ()
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-07-15 17:22:37 - app.core.database - INFO - Database initialized successfully
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - SELECT role.id, role.name, role.description, role.created_at, role.updated_at 
+FROM role
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - [generated in 0.00051s] ()
+2025-07-15 17:22:37 - __main__ - INFO - Created role: admin
+2025-07-15 17:22:37 - __main__ - INFO - Created role: manager
+2025-07-15 17:22:37 - __main__ - INFO - Created role: clerk
+2025-07-15 17:22:37 - __main__ - INFO - Created role: viewer
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - INSERT INTO role (name, description, created_at, updated_at) VALUES (?, ?, ?, ?)
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - [generated in 0.00050s] ('admin', 'Full system administrator with all permissions', '2025-07-16 00:22:37.738754', '2025-07-16 00:22:37.738754')
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - INSERT INTO role (name, description, created_at, updated_at) VALUES (?, ?, ?, ?)
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - [cached since 0.002302s ago] ('manager', 'Store manager with inventory and count management permissions', '2025-07-16 00:22:37.738754', '2025-07-16 00:22:37.738754')
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - INSERT INTO role (name, description, created_at, updated_at) VALUES (?, ?, ?, ?)
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - [cached since 0.003547s ago] ('clerk', 'Store clerk with basic inventory and count permissions', '2025-07-16 00:22:37.738754', '2025-07-16 00:22:37.738754')
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - INSERT INTO role (name, description, created_at, updated_at) VALUES (?, ?, ?, ?)
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - [cached since 0.004754s ago] ('viewer', 'Read-only access to inventory and counts', '2025-07-16 00:22:37.740208', '2025-07-16 00:22:37.740208')
+2025-07-15 17:22:37 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-07-15 17:22:37 - __main__ - INFO - Created roles: admin, manager, clerk, viewer
+2025-07-15 17:22:37 - __main__ - INFO - 
+Role Permissions Summary:
+2025-07-15 17:22:37 - __main__ - INFO - admin: 27 permissions
+2025-07-15 17:22:37 - __main__ - INFO -   - counts:approve
+2025-07-15 17:22:37 - __main__ - INFO -   - counts:create
+2025-07-15 17:22:37 - __main__ - INFO -   - counts:delete
+2025-07-15 17:22:37 - __main__ - INFO -   - counts:read
+2025-07-15 17:22:37 - __main__ - INFO -   - counts:update
+2025-07-15 17:22:37 - __main__ - INFO -   - inventory:create
+2025-07-15 17:22:37 - __main__ - INFO -   - inventory:delete
+2025-07-15 17:22:37 - __main__ - INFO -   - inventory:export
+2025-07-15 17:22:37 - __main__ - INFO -   - inventory:read
+2025-07-15 17:22:37 - __main__ - INFO -   - inventory:update
+2025-07-15 17:22:37 - __main__ - INFO -   - locations:create
+2025-07-15 17:22:37 - __main__ - INFO -   - locations:delete
+2025-07-15 17:22:37 - __main__ - INFO -   - locations:read
+2025-07-15 17:22:37 - __main__ - INFO -   - locations:update
+2025-07-15 17:22:37 - __main__ - INFO -   - reports:create
+2025-07-15 17:22:37 - __main__ - INFO -   - reports:export
+2025-07-15 17:22:37 - __main__ - INFO -   - reports:read
+2025-07-15 17:22:37 - __main__ - INFO -   - roles:create
+2025-07-15 17:22:37 - __main__ - INFO -   - roles:delete
+2025-07-15 17:22:37 - __main__ - INFO -   - roles:read
+2025-07-15 17:22:37 - __main__ - INFO -   - roles:update
+2025-07-15 17:22:37 - __main__ - INFO -   - system:admin
+2025-07-15 17:22:37 - __main__ - INFO -   - system:config
+2025-07-15 17:22:37 - __main__ - INFO -   - users:create
+2025-07-15 17:22:37 - __main__ - INFO -   - users:delete
+2025-07-15 17:22:37 - __main__ - INFO -   - users:read
+2025-07-15 17:22:37 - __main__ - INFO -   - users:update
+2025-07-15 17:22:37 - __main__ - INFO - manager: 14 permissions
+2025-07-15 17:22:37 - __main__ - INFO -   - counts:approve
+2025-07-15 17:22:37 - __main__ - INFO -   - counts:create
+2025-07-15 17:22:37 - __main__ - INFO -   - counts:read
+2025-07-15 17:22:37 - __main__ - INFO -   - counts:update
+2025-07-15 17:22:37 - __main__ - INFO -   - inventory:create
+2025-07-15 17:22:37 - __main__ - INFO -   - inventory:export
+2025-07-15 17:22:37 - __main__ - INFO -   - inventory:read
+2025-07-15 17:22:37 - __main__ - INFO -   - inventory:update
+2025-07-15 17:22:37 - __main__ - INFO -   - locations:read
+2025-07-15 17:22:37 - __main__ - INFO -   - reports:create
+2025-07-15 17:22:37 - __main__ - INFO -   - reports:export
+2025-07-15 17:22:37 - __main__ - INFO -   - reports:read
+2025-07-15 17:22:37 - __main__ - INFO -   - roles:read
+2025-07-15 17:22:37 - __main__ - INFO -   - users:read
+2025-07-15 17:22:37 - __main__ - INFO - clerk: 5 permissions
+2025-07-15 17:22:37 - __main__ - INFO -   - counts:create
+2025-07-15 17:22:37 - __main__ - INFO -   - counts:read
+2025-07-15 17:22:37 - __main__ - INFO -   - counts:update
+2025-07-15 17:22:37 - __main__ - INFO -   - inventory:read
+2025-07-15 17:22:37 - __main__ - INFO -   - reports:read
+2025-07-15 17:22:37 - __main__ - INFO - viewer: 3 permissions
+2025-07-15 17:22:37 - __main__ - INFO -   - counts:read
+2025-07-15 17:22:37 - __main__ - INFO -   - inventory:read
+2025-07-15 17:22:37 - __main__ - INFO -   - reports:read
+2025-07-15 17:22:37 - __main__ - INFO - 
+Role initialization completed successfully!

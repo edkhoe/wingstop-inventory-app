@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ../docker/Dockerfile.backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - /app/venv
+    environment:
+      - DATABASE_URL=sqlite:///./wingstop_inventory.db
+      - SECRET_KEY=your-secret-key-here
+      - ENVIRONMENT=development
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - wingstop-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../docker/Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    command: npm run dev
+    networks:
+      - wingstop-network
+    depends_on:
+      - backend
+
+  # Optional: PostgreSQL for production-like development
+  postgres:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=wingstop_inventory
+      - POSTGRES_USER=wingstop
+      - POSTGRES_PASSWORD=wingstop123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - wingstop-network
+    profiles:
+      - production
+
+networks:
+  wingstop-network:
+    driver: bridge
+
+volumes:
+  postgres_data: 

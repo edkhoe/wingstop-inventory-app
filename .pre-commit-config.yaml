@@ -1,0 +1,113 @@
+repos:
+  # General file checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: check-ast
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: debug-statements
+      - id: detect-private-key
+      - id: name-tests-test
+      - id: requirements-txt-fixer
+
+  # Backend Python hooks
+  - repo: https://github.com/psf/black
+    rev: 23.11.0
+    hooks:
+      - id: black
+        language_version: python3
+        args: [--line-length=88]
+        files: ^backend/
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.6
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+        files: ^backend/
+      - id: ruff-format
+        files: ^backend/
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.7.1
+    hooks:
+      - id: mypy
+        additional_dependencies: [types-all]
+        args: [--ignore-missing-imports]
+        files: ^backend/
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.15.0
+    hooks:
+      - id: pyupgrade
+        args: [--py38-plus]
+        files: ^backend/
+
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.12.0
+    hooks:
+      - id: isort
+        args: [--profile=black, --line-length=88]
+        files: ^backend/
+
+  # Frontend JavaScript/TypeScript hooks
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v8.53.0
+    hooks:
+      - id: eslint
+        files: ^frontend/
+        types: [file]
+        args: [--fix]
+        additional_dependencies:
+          - eslint@8.53.0
+          - '@typescript-eslint/eslint-plugin@6.10.0'
+          - '@typescript-eslint/parser@6.10.0'
+          - 'eslint-plugin-react-hooks@4.6.0'
+          - 'eslint-plugin-react-refresh@0.4.4'
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        files: ^frontend/
+        types: [file]
+        args: [--write]
+
+  # Security checks
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        args: [--baseline, .secrets.baseline]
+
+  # Git hooks
+  - repo: https://github.com/pre-commit/mirrors-gitlint
+    rev: v0.19.0
+    hooks:
+      - id: gitlint
+        args: [--msg-template, "{subject}\n\n{body}"]
+
+  # Documentation checks
+  - repo: https://github.com/pre-commit/mirrors-mdx
+    rev: v2.3.0
+    hooks:
+      - id: mdx
+        files: \.mdx?$
+
+  # Docker checks
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
+    hooks:
+      - id: hadolint-docker
+        files: Dockerfile 

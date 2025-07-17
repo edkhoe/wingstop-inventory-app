@@ -1,0 +1,173 @@
+# Wingstop Inventory App - Implementation Tasks
+
+## Relevant Files
+
+- `backend/main.py` - FastAPI application entry point and main router configuration
+- `backend/app/models/` - SQLModel database models for users, locations, roles, inventory items, categories, counts, transfers, and schedules
+- `backend/app/schemas/` - Pydantic schemas for API request/response validation (one file per entity, now implemented)
+- `backend/app/api/` - FastAPI route handlers for all endpoints (one router per entity, now implemented)
+- `backend/app/api/auth.py` - Complete JWT authentication system with login, register, refresh, logout, password change, profile update, and token verification endpoints
+- `backend/app/core/rbac.py` - Comprehensive Role-Based Access Control system with permissions, role hierarchies, and middleware
+- `backend/app/api/rbac.py` - RBAC API endpoints for role/permission management and user role assignments
+- `backend/init_roles.py` - Script to initialize default roles (admin, manager, clerk, viewer) in database
+- `backend/main.py` - Now includes all routers under /api/v1, database health endpoints, enhanced configuration, and middleware
+- `backend/app/core/` - Core configuration, database setup, and authentication utilities
+- `backend/app/services/` - Business logic services for inventory, counts, forecasting, etc.
+- `backend/alembic/` - Database migration files and configuration (now initialized and configured for SQLModel)
+- `backend/alembic/versions/` - Stores generated migration scripts (initial migration created)
+- `backend/app/core/database.py` - Enhanced database configuration with connection pooling, session management, and health checks
+- `backend/app/core/db_utils.py` - Database utilities for CRUD operations, pagination, and bulk operations
+- `backend/manage_database.ps1` - Comprehensive database management script for initialization, health checks, and maintenance
+- `backend/app/models/__init__.py` - Imports all models for Alembic discovery
+- `backend/app/core/config.py` - Enhanced configuration system with environment-specific settings, validation, and security
+- `backend/validate_config.ps1` - Configuration validation and management script
+- `backend/create_initial_migration.ps1` - Script to generate the initial Alembic migration
+- `backend/manage_db.ps1` - Comprehensive database management script for Alembic operations
+- `backend/requirements.txt` - Python dependencies managed by UV
+- `backend/.env` - Environment configuration for database URL, JWT secrets, etc.
+- `frontend/src/` - React.js application with TypeScript
+- `frontend/src/components/` - Reusable React components
+- `frontend/src/pages/` - Page components for inventory, dashboard, auth, etc.
+- `frontend/src/hooks/` - Custom React hooks for API calls and state management
+- `frontend/src/services/` - API service functions for backend communication
+- `frontend/src/types/` - TypeScript type definitions
+- `frontend/src/utils/` - Utility functions and helpers
+- `frontend/package.json` - React dependencies and scripts
+- `frontend/.env` - Frontend environment variables
+- `docker-compose.yml` - Container orchestration for development and production
+- `docker/Dockerfile.backend` - Backend container configuration
+- `docker/Dockerfile.frontend` - Frontend container configuration
+- `frontend/src/components/ui/Button.tsx` - Reusable Button component with variants and states
+- `frontend/src/components/ui/Input.tsx` - Reusable Input component with validation and icons
+- `frontend/src/components/ui/Modal.tsx` - Modal component with backdrop and animations
+- `frontend/src/components/ui/Select.tsx` - Select dropdown component with search functionality
+- `frontend/src/components/ui/Checkbox.tsx` - Checkbox component with label support
+- `frontend/src/components/ui/Badge.tsx` - Badge component with multiple variants
+- `frontend/src/components/ui/Alert.tsx` - Alert component with different types and icons
+- `frontend/src/components/ui/Loading.tsx` - Loading components (Spinner, Skeleton, LoadingOverlay)
+- `frontend/src/pages/UIDemo.tsx` - Comprehensive demo page showcasing all UI components
+- `frontend/src/utils/validation.ts` - Yup validation schemas for all form types
+- `frontend/src/components/forms/Form.tsx` - Main Form component with React Hook Form integration
+- `frontend/src/components/forms/FormField.tsx` - Form field components with validation
+- `frontend/src/components/forms/index.ts` - Form components exports
+- `frontend/src/hooks/useForm.ts` - Pre-configured form hooks for common use cases
+- `frontend/src/pages/FormDemo.tsx` - Comprehensive form handling demo page
+- `frontend/src/services/api.ts` - Axios API client with interceptors and error handling
+- `frontend/src/services/auth.ts` - Authentication API services
+- `frontend/src/services/inventory.ts` - Inventory management API services
+- `frontend/src/services/counts.ts` - Count entry API services
+- `frontend/src/hooks/useApi.ts` - TanStack Query hooks for all API services
+- `frontend/src/pages/ApiDemo.tsx` - Comprehensive API client demo page
+- `frontend/src/types/index.ts` - Comprehensive TypeScript interfaces for all data models
+- `frontend/src/types/auth.ts` - Authentication-related TypeScript types
+- `frontend/src/types/inventory.ts` - Inventory-related TypeScript types
+- `frontend/src/types/counts.ts` - Count-related TypeScript types
+- `frontend/src/pages/TypesDemo.tsx` - TypeScript interfaces demo page
+- `frontend/src/contexts/AuthContext.tsx` - Comprehensive authentication context with token management, user state, and authentication methods
+- `frontend/src/hooks/useAuth.ts` - Main authentication hook and specialized hooks for login, register, logout, profile management, and token refresh
+- `frontend/src/hooks/usePermissions.ts` - Permission checking hooks with role-based access control and higher-order components for protected UI elements
+- `frontend/src/hooks/useAuthState.ts` - Authentication state management with auto-refresh tokens, error handling, and authentication lifecycle
+- `frontend/src/pages/AuthDemo.tsx` - Comprehensive authentication demo page showcasing all authentication features and hooks
+- `frontend/src/components/auth/ProtectedRoute.tsx` - Enhanced protected route component with loading states, permission checking, and role-based access control
+- `frontend/src/components/auth/RouteGuard.tsx` - Comprehensive route guard component with flexible authentication, permission, and role requirements
+- `frontend/src/components/auth/guards/index.tsx` - Specialized route guard components for different access levels (PublicRoute, AuthenticatedRoute, AdminRoute, etc.)
+- `frontend/src/components/auth/RouteConfig.tsx` - Route configuration system for defining and managing protected routes with access requirements
+- `frontend/src/pages/RouteGuardDemo.tsx` - Comprehensive route guard demo page showcasing different types of route protection and access control
+
+### Notes
+
+- Unit tests should typically be placed alongside the code files they are testing (e.g., `MyComponent.tsx` and `MyComponent.test.tsx` in the same directory).
+- Use `npm test` or `yarn test` to run frontend tests. Use `pytest` to run backend tests.
+- Backend API documentation will be automatically generated by FastAPI at `/docs` endpoint.
+
+## Tasks
+
+- [ ] 1.0 Set up project infrastructure and development environment
+  - [x] 1.1 Initialize project structure with separate frontend and backend directories
+  - [x] 1.2 Set up UV for Python dependency management in backend
+  - [x] 1.3 Configure React.js with TypeScript and Vite in frontend
+  - [x] 1.4 Set up Docker containers for development environment
+  - [x] 1.5 Configure environment variables and configuration files
+  - [x] 1.6 Set up linting and formatting tools (Black, Ruff, ESLint, Prettier)
+  - [x] 1.7 Configure pre-commit hooks for code quality
+- [ ] 2.0 Implement backend API with FastAPI and SQLModel
+  - [x] 2.1 Design SQLModel database models for all entities (users, locations, roles, inventory items, categories, counts, transfers, schedules)
+  - [x] 2.2 Set up Alembic for database migrations
+  - [x] 2.3 Create Pydantic schemas for API request/response validation
+  - [x] 2.4 Implement FastAPI application structure with routers
+  - [x] 2.5 Set up database connection and session management
+  - [x] 2.6 Create core configuration and settings management
+  - [x] 2.7 Implement error handling and logging middleware
+  - [x] 2.8 Set up CORS and security middleware
+- [ ] 3.0 Build React.js frontend with TypeScript
+  - [x] 3.1 Set up React Router for navigation
+  - [x] 3.2 Create base layout components (Header, Sidebar, Footer)
+  - [x] 3.3 Implement responsive design with CSS-in-JS or Tailwind CSS
+  - [x] 3.4 Set up state management (Zustand or Context API)
+  - [x] 3.5 Create reusable UI components (Button, Input, Modal, Table, etc.)
+  - [x] 3.6 Implement form handling with React Hook Form
+  - [x] 3.7 Set up API client with Axios or TanStack Query
+  - [x] 3.8 Create TypeScript interfaces for all data models
+- [ ] 4.0 Implement authentication and authorization system
+  - [x] 4.1 Implement JWT token authentication in FastAPI backend
+  - [x] 4.2 Create user registration and login endpoints
+  - [x] 4.3 Implement role-based access control middleware
+  - [x] 4.4 Create authentication context and hooks in React frontend
+  - [x] 4.5 Implement protected routes and route guards
+  - [ ] 4.6 Create login and registration forms
+  - [ ] 4.7 Implement token storage and refresh logic
+  - [ ] 4.8 Set up password hashing and security utilities
+- [ ] 5.0 Create inventory management functionality
+  - [ ] 5.1 Implement inventory item CRUD API endpoints
+  - [ ] 5.2 Create category management API endpoints
+  - [ ] 5.3 Build inventory list page with search, filter, and pagination
+  - [ ] 5.4 Create inventory item add/edit forms with validation
+  - [ ] 5.5 Implement category management modal
+  - [ ] 5.6 Create inventory item detail view
+  - [ ] 5.7 Implement bulk operations (import/export CSV)
+  - [ ] 5.8 Add role-based permissions for inventory management
+- [ ] 6.0 Build count entry and editing system with offline support
+  - [ ] 6.1 Implement count entry API endpoints
+  - [ ] 6.2 Create count entry forms with validation
+  - [ ] 6.3 Implement offline data storage with IndexedDB or localStorage
+  - [ ] 6.4 Create sync mechanism for offline data
+  - [ ] 6.5 Build count history and editing functionality
+  - [ ] 6.6 Implement count approval workflow
+  - [ ] 6.7 Create count entry mobile-optimized interface
+  - [ ] 6.8 Add count variance reporting and alerts
+- [ ] 7.0 Implement scheduling and notification system
+  - [ ] 7.1 Design schedule database models and API
+  - [ ] 7.2 Create schedule management interface
+  - [ ] 7.3 Implement recurring schedule configuration
+  - [ ] 7.4 Set up background task processing with Celery
+  - [ ] 7.5 Create notification system (email, in-app, SMS)
+  - [ ] 7.6 Implement reminder scheduling and delivery
+  - [ ] 7.7 Create schedule calendar view
+  - [ ] 7.8 Add manual reminder functionality
+- [ ] 8.0 Develop forecasting and order suggestion engine
+  - [ ] 8.1 Implement usage calculation algorithms
+  - [ ] 8.2 Create forecasting models for different time horizons
+  - [ ] 8.3 Build order suggestion logic with par levels
+  - [ ] 8.4 Implement manual override functionality
+  - [ ] 8.5 Create forecasting dashboard and visualizations
+  - [ ] 8.6 Add seasonal adjustment algorithms
+  - [ ] 8.7 Implement forecast accuracy tracking
+  - [ ] 8.8 Create order suggestion export functionality
+- [ ] 9.0 Create reporting dashboard and export functionality
+  - [ ] 9.1 Build main dashboard with key metrics
+  - [ ] 9.2 Implement historical usage reports
+  - [ ] 9.3 Create variance analysis reports
+  - [ ] 9.4 Add CSV and Excel export functionality
+  - [ ] 9.5 Implement report scheduling and delivery
+  - [ ] 9.6 Create custom report builder
+  - [ ] 9.7 Add data visualization components (charts, graphs)
+  - [ ] 9.8 Implement report caching and performance optimization
+- [ ] 10.0 Implement multi-location comparison and heatmap features
+  - [ ] 10.1 Design multi-location data models and APIs
+  - [ ] 10.2 Create location comparison interface
+  - [ ] 10.3 Implement heatmap visualization components
+  - [ ] 10.4 Build side-by-side inventory comparison
+  - [ ] 10.5 Create regional dashboard for admins
+  - [ ] 10.6 Implement location-based filtering and search
+  - [ ] 10.7 Add transfer tracking between locations
+  - [ ] 10.8 Create location performance metrics and alerts 
