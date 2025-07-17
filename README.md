@@ -1,1 +1,0 @@
-# wingstop-inventory-app
