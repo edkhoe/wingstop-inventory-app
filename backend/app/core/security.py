@@ -12,6 +12,7 @@ import jwt
 
 from .config import settings
 from .logging import get_logger, log_with_context
+from .security_utils import SecurityUtils, validate_password_security, validate_registration_data, rate_limiter
 
 logger = get_logger(__name__)
 
@@ -139,12 +140,19 @@ class AuthenticationManager:
     
     def verify_password(self, password: str, hashed_password: str) -> bool:
         """Verify a password against its hash."""
-        import bcrypt
-        return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
+        return SecurityUtils.verify_password_with_salt(password, hashed_password)
     
     def generate_api_key(self) -> str:
         """Generate a secure API key."""
-        return secrets.token_urlsafe(32)
+        return SecurityUtils.generate_api_key()
+    
+    def validate_password_strength(self, password: str) -> Dict[str, Any]:
+        """Validate password strength using enhanced security utilities."""
+        return validate_password_security(password)
+    
+    def validate_registration_data(self, username: str, email: str, password: str) -> Dict[str, Any]:
+        """Validate registration data comprehensively."""
+        return validate_registration_data(username, email, password)
 
 
 class SecurityMiddleware(BaseHTTPMiddleware):
@@ -218,6 +226,46 @@ class RequestValidationMiddleware(BaseHTTPMiddleware):
         return response
 
 
+class RateLimitMiddleware(BaseHTTPMiddleware):
+    """Middleware to implement rate limiting."""
+    
+    def __init__(self, app: ASGIApp):
+        super().__init__(app)
+    
+    async def dispatch(self, request: Request, call_next):
+        # Get client IP for rate limiting
+        client_ip = request.client.host if request.client else "unknown"
+        
+        # Skip rate limiting for certain paths
+        skip_rate_limit_paths = ["/", "/health", "/health/db", "/docs", "/openapi.json", "/redoc"]
+        if any(request.url.path.startswith(path) for path in skip_rate_limit_paths):
+            return await call_next(request)
+        
+        # Apply rate limiting
+        if not rate_limiter.is_allowed(client_ip, max_requests=100, window_seconds=60):
+            log_with_context(
+                logger,
+                "warning",
+                f"Rate limit exceeded for IP: {client_ip}",
+                client_ip=client_ip,
+                url=str(request.url)
+            )
+            raise HTTPException(
+                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                detail="Rate limit exceeded. Please try again later."
+            )
+        
+        response = await call_next(request)
+        
+        # Add rate limit headers
+        remaining = rate_limiter.get_remaining_requests(client_ip, max_requests=100, window_seconds=60)
+        response.headers["X-RateLimit-Remaining"] = str(remaining)
+        response.headers["X-RateLimit-Limit"] = "100"
+        response.headers["X-RateLimit-Reset"] = str(int((datetime.utcnow() + timedelta(seconds=60)).timestamp()))
+        
+        return response
+
+
 class AuthenticationMiddleware(BaseHTTPMiddleware):
     """Middleware to handle authentication."""
     
@@ -263,6 +311,17 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
             payload = self.auth_manager.verify_token(token)
             request.state.user = payload
             
+            # Create audit log for authentication
+            SecurityUtils.create_audit_log(
+                action="user_authenticated",
+                user_id=payload.get("sub"),
+                details={
+                    "ip_address": request.client.host if request.client else None,
+                    "user_agent": request.headers.get("user-agent"),
+                    "url": str(request.url)
+                }
+            )
+            
             log_with_context(
                 logger,
                 "info",
@@ -294,6 +353,7 @@ def setup_security_middleware(app: ASGIApp) -> ASGIApp:
     """Setup security middleware stack."""
     # Note: Order matters - middleware is applied in reverse order
     app = AuthenticationMiddleware(app)
+    app = RateLimitMiddleware(app)
     app = RequestValidationMiddleware(app)
     app = SecurityMiddleware(app)
     
@@ -303,8 +363,7 @@ def setup_security_middleware(app: ASGIApp) -> ASGIApp:
 # Security utilities
 def sanitize_input(text: str) -> str:
     """Basic input sanitization."""
-    import html
-    return html.escape(text.strip())
+    return SecurityUtils.sanitize_input(text)
 
 
 def validate_file_type(filename: str) -> bool:
@@ -333,26 +392,5 @@ def generate_secure_filename(original_filename: str) -> str:
 
 
 def validate_password_strength(password: str) -> Dict[str, Any]:
-    """Validate password strength."""
-    errors = []
-    
-    if len(password) < 8:
-        errors.append("Password must be at least 8 characters long")
-    
-    if not any(c.isupper() for c in password):
-        errors.append("Password must contain at least one uppercase letter")
-    
-    if not any(c.islower() for c in password):
-        errors.append("Password must contain at least one lowercase letter")
-    
-    if not any(c.isdigit() for c in password):
-        errors.append("Password must contain at least one number")
-    
-    if not any(c in "!@#$%^&*()_+-=[]{}|;:,.<>?" for c in password):
-        errors.append("Password must contain at least one special character")
-    
-    return {
-        "is_valid": len(errors) == 0,
-        "errors": errors,
-        "strength_score": max(0, 5 - len(errors))
-    } 
+    """Validate password strength using enhanced security utilities."""
+    return validate_password_security(password) 
