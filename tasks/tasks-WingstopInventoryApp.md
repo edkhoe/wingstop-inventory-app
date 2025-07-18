@@ -73,6 +73,10 @@
 - `frontend/src/components/auth/guards/index.tsx` - Specialized route guard components for different access levels (PublicRoute, AuthenticatedRoute, AdminRoute, etc.)
 - `frontend/src/components/auth/RouteConfig.tsx` - Route configuration system for defining and managing protected routes with access requirements
 - `frontend/src/pages/RouteGuardDemo.tsx` - Comprehensive route guard demo page showcasing different types of route protection and access control
+- `frontend/src/pages/Login.tsx` - Refactored login form using shared Form components, Yup validation, and useLogin hook
+- `frontend/src/pages/Register.tsx` - Refactored registration form using shared Form components, Yup validation, role/location selects, and useRegister hook
+- `frontend/src/utils/tokenStorage.ts` - Centralized token storage utility with race condition prevention and callback system for API client integration
+- `frontend/src/services/api.ts` - Refactored API client that delegates token refresh to AuthContext and uses shared token storage
 
 ### Notes
 
@@ -114,8 +118,8 @@
   - [x] 4.3 Implement role-based access control middleware
   - [x] 4.4 Create authentication context and hooks in React frontend
   - [x] 4.5 Implement protected routes and route guards
-  - [ ] 4.6 Create login and registration forms
-  - [ ] 4.7 Implement token storage and refresh logic
+  - [x] 4.6 Create login and registration forms
+  - [x] 4.7 Implement token storage and refresh logic
   - [ ] 4.8 Set up password hashing and security utilities
 - [ ] 5.0 Create inventory management functionality
   - [ ] 5.1 Implement inventory item CRUD API endpoints

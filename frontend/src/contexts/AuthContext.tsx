@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import React, { createContext, useContext, useEffect, useState, ReactNode, useRef } from 'react'
 import { authService } from '../services/auth'
 import { AuthResponse, LoginRequest, RegisterRequest } from '../types/auth'
 import { User } from '../types/index'
+import { tokenStorage, setTokenRefreshCallback, clearTokenRefreshCallback } from '../utils/tokenStorage'
 
 // Authentication context interface
 interface AuthContextType {
@@ -31,45 +32,6 @@ interface AuthContextType {
 // Create the context
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-// Token storage keys
-const ACCESS_TOKEN_KEY = 'access_token'
-const REFRESH_TOKEN_KEY = 'refresh_token'
-const USER_KEY = 'user'
-
-// Token storage utilities
-const tokenStorage = {
-  getAccessToken: (): string | null => {
-    return localStorage.getItem(ACCESS_TOKEN_KEY)
-  },
-  
-  getRefreshToken: (): string | null => {
-    return localStorage.getItem(REFRESH_TOKEN_KEY)
-  },
-  
-  setTokens: (accessToken: string, refreshToken: string): void => {
-    localStorage.setItem(ACCESS_TOKEN_KEY, accessToken)
-    localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken)
-  },
-  
-  clearTokens: (): void => {
-    localStorage.removeItem(ACCESS_TOKEN_KEY)
-    localStorage.removeItem(REFRESH_TOKEN_KEY)
-  },
-  
-  getUser: (): User | null => {
-    const userStr = localStorage.getItem(USER_KEY)
-    return userStr ? JSON.parse(userStr) : null
-  },
-  
-  setUser: (user: User): void => {
-    localStorage.setItem(USER_KEY, JSON.stringify(user))
-  },
-  
-  clearUser: (): void => {
-    localStorage.removeItem(USER_KEY)
-  }
-}
-
 // Auth provider props
 interface AuthProviderProps {
   children: ReactNode
@@ -81,6 +43,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  
+  // Ref to track if a refresh is in progress (prevents race conditions)
+  const refreshInProgress = useRef(false)
 
   // Initialize authentication state on mount
   useEffect(() => {
@@ -98,13 +63,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       } catch (error) {
         // Token is invalid, clear storage
         tokenStorage.clearTokens()
-        tokenStorage.clearUser()
       } finally {
         setIsLoading(false)
       }
     }
 
     initializeAuth()
+  }, [])
+
+  // Set up token refresh callback for API client
+  useEffect(() => {
+    setTokenRefreshCallback(refreshToken)
+    return () => {
+      clearTokenRefreshCallback()
+    }
   }, [])
 
   // Login function
@@ -115,9 +87,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       
       const response = await authService.login(credentials)
       
-      // Store tokens and user
-      tokenStorage.setTokens(response.access_token, response.refresh_token)
-      tokenStorage.setUser(response.user)
+      // Store tokens and user using shared utility
+      tokenStorage.setTokensWithUser(response.access_token, response.refresh_token, response.user)
       
       setUser(response.user)
       setIsAuthenticated(true)
@@ -140,9 +111,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       
       const response = await authService.register(userData)
       
-      // Store tokens and user
-      tokenStorage.setTokens(response.access_token, response.refresh_token)
-      tokenStorage.setUser(response.user)
+      // Store tokens and user using shared utility
+      tokenStorage.setTokensWithUser(response.access_token, response.refresh_token, response.user)
       
       setUser(response.user)
       setIsAuthenticated(true)
@@ -171,13 +141,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsAuthenticated(false)
       setError(null)
       tokenStorage.clearTokens()
-      tokenStorage.clearUser()
     }
   }
 
-  // Refresh token function
+  // Refresh token function - robust with race condition prevention
   const refreshToken = async (): Promise<boolean> => {
+    // Prevent multiple simultaneous refresh attempts
+    if (refreshInProgress.current) {
+      // Wait for the current refresh to complete
+      while (refreshInProgress.current) {
+        await new Promise(resolve => setTimeout(resolve, 100))
+      }
+      return tokenStorage.isAuthenticated()
+    }
+
     try {
+      refreshInProgress.current = true
+      
       const refreshTokenValue = tokenStorage.getRefreshToken()
       if (!refreshTokenValue) {
         return false
@@ -185,14 +165,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       const response = await authService.refreshToken(refreshTokenValue)
       
-      // Update tokens
-      tokenStorage.setTokens(response.access_token, response.refresh_token)
+      // Update tokens and user info
+      tokenStorage.setTokensWithUser(response.access_token, response.refresh_token, response.user)
+      
+      // Update state
+      setUser(response.user)
+      setIsAuthenticated(true)
       
       return true
     } catch (error) {
       // Refresh failed, logout user
       await logout()
       return false
+    } finally {
+      refreshInProgress.current = false
     }
   }
 
@@ -254,7 +240,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     tokenStorage.setTokens(tokens.access_token, tokens.refresh_token)
   }
 
-  // Context value
   const contextValue: AuthContextType = {
     user,
     isAuthenticated,
@@ -269,7 +254,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     changePassword,
     getAccessToken,
     getRefreshToken,
-    setTokens
+    setTokens,
   }
 
   return (
@@ -279,7 +264,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   )
 }
 
-// Custom hook to use auth context
+// Hook to use auth context
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext)
   if (context === undefined) {

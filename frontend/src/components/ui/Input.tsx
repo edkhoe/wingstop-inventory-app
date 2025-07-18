@@ -26,12 +26,17 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
   variant = 'default',
   className,
   type = 'text',
+  id,
+  name,
   ...props
 }, ref) => {
   const [showPassword, setShowPassword] = React.useState(false)
   const [hasValue, setHasValue] = React.useState(false)
   
   const inputType = type === 'password' && showPassword ? 'text' : type
+  
+  // Generate id from name if not provided
+  const inputId = id || name || `input-${Math.random().toString(36).substr(2, 9)}`
   
   const baseClasses = 'block w-full rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:opacity-50 disabled:cursor-not-allowed'
   
@@ -61,7 +66,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
   return (
     <div className={cn('space-y-1', widthClass)}>
       {label && (
-        <label className="block text-sm font-medium text-gray-700">
+        <label htmlFor={inputId} className="block text-sm font-medium text-gray-700">
           {label}
         </label>
       )}
@@ -77,6 +82,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
         
         <input
           ref={ref}
+          id={inputId}
           type={inputType}
           className={cn(
             baseClasses,
@@ -97,6 +103,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
               type="button"
               className="text-gray-400 hover:text-gray-600 focus:outline-none"
               onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
               {showPassword ? (
                 <EyeOff className="h-4 w-4" />
@@ -111,6 +118,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
               type="button"
               className="text-gray-400 hover:text-gray-600 focus:outline-none"
               onClick={handleClear}
+              aria-label="Clear input"
             >
               <X className="h-4 w-4" />
             </button>

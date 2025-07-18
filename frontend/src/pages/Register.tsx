@@ -1,60 +1,58 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Eye, EyeOff, Lock, Mail, User, Building } from 'lucide-react'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { registerSchema, RegisterFormData } from '../utils/validation'
+import { Form } from '../components/forms/Form'
+import { FormField, SelectField, FormFieldRow } from '../components/forms/FormField'
+import { useRegister } from '../hooks/useAuth'
+import { apiService } from '../services/api'
+import { Role, Location } from '../types/index'
 
 const Register: React.FC = () => {
   const navigate = useNavigate()
-  
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    location: '',
+  const { register, isLoading, error } = useRegister()
+
+  const [roles, setRoles] = useState<Role[]>([])
+  const [locations, setLocations] = useState<Location[]>([])
+  const [fetchError, setFetchError] = useState<string | null>(null)
+
+  useEffect(() => {
+    // Fetch roles and locations for select fields
+    const fetchData = async () => {
+      try {
+        const rolesData = await apiService.get<Role[]>('/roles')
+        setRoles(rolesData)
+        const locationsData = await apiService.get<Location[]>('/locations')
+        setLocations(locationsData)
+      } catch (err: any) {
+        setFetchError(err.message || 'Failed to load roles/locations')
+      }
+    }
+    fetchData()
+  }, [])
+
+  const form = useForm<RegisterFormData>({
+    resolver: yupResolver(registerSchema),
+    defaultValues: {
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      firstName: '',
+      lastName: '',
+      roleId: undefined,
+      locationId: undefined,
+    },
+    mode: 'onTouched',
   })
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError('')
-
-    // Basic validation
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match')
-      setIsLoading(false)
-      return
+  const onSubmit = async (data: RegisterFormData) => {
+    const result = await register(data)
+    if (result?.success) {
+      navigate('/login', { state: { message: 'Registration successful! Please sign in.' } })
     }
-
-    if (formData.password.length < 8) {
-      setError('Password must be at least 8 characters long')
-      setIsLoading(false)
-      return
-    }
-
-    try {
-      // TODO: Implement actual registration API call
-      // For now, just simulate success
-      setTimeout(() => {
-        navigate('/login', { 
-          state: { message: 'Registration successful! Please sign in.' }
-        })
-      }, 1000)
-    } catch (err) {
-      setError('Registration failed. Please try again.')
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
+    // error is handled by the hook
   }
 
   return (
@@ -68,157 +66,35 @@ const Register: React.FC = () => {
             Join Wingstop Inventory Management
           </p>
         </div>
-        
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                Full Name
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  autoComplete="name"
-                  required
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="appearance-none relative block w-full pl-10 pr-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  placeholder="Enter your full name"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="appearance-none relative block w-full pl-10 pr-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  placeholder="Enter your email"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="location" className="block text-sm font-medium text-gray-700">
-                Location
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Building className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="location"
-                  name="location"
-                  type="text"
-                  required
-                  value={formData.location}
-                  onChange={handleChange}
-                  className="appearance-none relative block w-full pl-10 pr-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  placeholder="Enter your location"
-                />
-              </div>
-            </div>
-            
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  autoComplete="new-password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="appearance-none relative block w-full pl-10 pr-10 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  placeholder="Enter your password"
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400" />
-                  ) : (
-                    <Eye className="h-5 w-5 text-gray-400" />
-                  )}
-                </button>
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                Confirm Password
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  autoComplete="new-password"
-                  required
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className="appearance-none relative block w-full pl-10 pr-10 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  placeholder="Confirm your password"
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400" />
-                  ) : (
-                    <Eye className="h-5 w-5 text-gray-400" />
-                  )}
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
-              {error}
-            </div>
-          )}
-
-          <div>
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isLoading ? 'Creating account...' : 'Create account'}
-            </button>
-          </div>
-
+        <Form
+          form={form}
+          onSubmit={onSubmit}
+          submitText={isLoading ? 'Creating account...' : 'Create account'}
+          loading={isLoading}
+          error={error || fetchError || undefined}
+        >
+          <FormField name="username" label="Username" placeholder="Enter a username" required />
+          <FormFieldRow>
+            <FormField name="firstName" label="First Name" placeholder="Enter your first name" required />
+            <FormField name="lastName" label="Last Name" placeholder="Enter your last name" required />
+          </FormFieldRow>
+          <FormField name="email" label="Email address" type="email" placeholder="Enter your email" required />
+          <FormField name="password" label="Password" type="password" placeholder="Enter your password" required />
+          <FormField name="confirmPassword" label="Confirm Password" type="password" placeholder="Confirm your password" required />
+          <SelectField
+            name="roleId"
+            label="Role"
+            options={roles.map(role => ({ value: String(role.id), label: role.name }))}
+            placeholder="Select a role"
+            required
+          />
+          <SelectField
+            name="locationId"
+            label="Location"
+            options={locations.map(loc => ({ value: String(loc.id), label: loc.name }))}
+            placeholder="Select a location"
+            required
+          />
           <div className="text-center">
             <Link
               to="/login"
@@ -227,7 +103,7 @@ const Register: React.FC = () => {
               Already have an account? Sign in
             </Link>
           </div>
-        </form>
+        </Form>
       </div>
     </div>
   )
